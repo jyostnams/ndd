@@ -1,0 +1,251 @@
+SlNo,Natural_Language_Questions,SQL_Query
+1," What are the most recent tweets about the typhoon disaster in Kaohsiung City, along with their sentiment scores and retweet/favorite counts?","SELECT tweet_text, sentiment_score, retweet_count, favorite_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Kaohsiung City%' AND tweet_text LIKE '%typhoon%'
+ORDER BY timestamp DESC
+LIMIT 5;"
+2, Retrieve the tweets with the highest retweet count related to the typhoon disaster in Kaohsiung City.,"SELECT tweet_text, retweet_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Kaohsiung City%' AND tweet_text LIKE '%typhoon%'
+ORDER BY retweet_count DESC
+LIMIT 3;"
+3," List the types of natural disasters that have affected the Tainan City area, along with the affected population and relief status for each disaster.","SELECT d.disaster_type, d.affected_population, d.relief_status
+FROM Disaster_Information d
+WHERE d.location LIKE '%Tainan City%';"
+4, Show the infrastructure status for the areas affected by the most recent flood disaster.,"SELECT d.affected_areas, d.infrastructure_status
+FROM Damage_Assessment d
+WHERE d.damage_type = 'Flood'
+ORDER BY d.timestamp DESC
+LIMIT 1;"
+5, Find the emergency contacts who can provide psychological support services in Tainan City.,"SELECT contact_info, organization_name, designation
+FROM Emergency_Contacts
+WHERE location LIKE '%Tainan City%' AND contact_type LIKE '%Psychological Support%';"
+6," List the community support services offering counseling services in Kaohsiung City, along with their service hours.","SELECT service_type, description, service_hours
+FROM Community_Support_Services
+WHERE location LIKE '%Kaohsiung City%' AND description LIKE '%counseling%';"
+7," Show the emergency response plans for earthquake disasters in Hualien County, including their descriptions and responsible agencies.","SELECT plan_type, description, responsible_agency
+FROM Emergency_Response_Plans
+WHERE location LIKE '%Hualien County%' AND plan_type LIKE '%Earthquake%';"
+8," List the disaster recovery resources available in Yilan County, along with their availability status and distribution process.","SELECT resource_type, availability_status, distribution_process
+FROM Disaster_Recovery_Resources
+WHERE location LIKE '%Yilan County%';"
+9," Find the safety procedures related to earthquake preparedness in Tainan City, including their descriptions and responsible authorities.","SELECT procedure_type, description, responsible_authority
+FROM Safety_Procedures
+WHERE location LIKE '%Tainan City%' AND procedure_type LIKE '%Earthquake%';"
+10," List the disaster training programs scheduled in Hsinchu County for typhoon preparedness, including their descriptions and training dates.","SELECT program_type, description, training_date
+FROM Disaster_Training_Programs
+WHERE location LIKE '%Hsinchu County%' AND program_type LIKE '%Typhoon%';"
+11," Show the details of donations received for the earthquake disaster in Hualien County, including the donor, donation type, quantity, and distribution status.","SELECT d.donor_id, d.donation_type, d.quantity, d.distribution_status
+FROM Donations d
+JOIN Disaster_Information i ON d.recipient_org = i.disaster_id
+WHERE i.location LIKE '%Hualien County%' AND i.disaster_type = 'Earthquake';"
+12," List the resource centers in Tainan City that have medical supplies available, along with their contact information.","SELECT location, contact_info
+FROM Resource_Centers
+WHERE location LIKE '%Tainan City%' AND available_resources LIKE '%medical%';"
+13, Find the emergency response team assignments involving international aid organizations for the typhoon disaster in Kaohsiung City.,"SELECT task_description, team_leader, team_members
+FROM Emergency_Response_Team_Assignments
+WHERE location LIKE '%Kaohsiung City%' 
+AND task_description LIKE '%international aid%' AND task_description LIKE '%typhoon%';"
+14, Show the disaster relief fund allocations for international aid organizations assisting with the earthquake disaster in Hualien County.,"SELECT fund_type, amount_allocated, allocation_purpose, beneficiary_criteria
+FROM Disaster_Relief_Fund_Allocation
+WHERE allocation_purpose LIKE '%international aid%' 
+AND allocation_purpose LIKE '%earthquake%' AND allocation_purpose LIKE '%Hualien County%';"
+15," List the risk mitigation strategies related to earthquake preparedness in Tainan City, along with their descriptions and implementation status.","SELECT strategy_type, description, implementation_status
+FROM Risk_Mitigation_Strategies
+WHERE location LIKE '%Tainan City%' AND strategy_type LIKE '%Earthquake%';"
+16," Find the government alerts issued for Kaohsiung City related to typhoon disasters, including their severity and instructions given.","SELECT alert_type, severity, instructions_given
+FROM Government_Alerts
+WHERE affected_area LIKE '%Kaohsiung City%' AND alert_type LIKE '%Typhoon%';"
+17," Show the public safety announcements made in Hualien County during the earthquake disaster, including their message and audience reach.","SELECT announcement_type, message, audience_reach
+FROM Public_Safety_Announcements
+WHERE location LIKE '%Hualien County%' AND announcement_type LIKE '%Earthquake%';"
+18, List the emergency response assignments in Tainan City that involve crisis communication tasks related to the typhoon disaster.,"SELECT task_description, team_leader, team_members
+FROM Emergency_Response_Team_Assignments
+WHERE location LIKE '%Tainan City%' AND task_description LIKE '%crisis communication%' AND task_description LIKE '%typhoon%';"
+19," Find the locations affected by the most recent earthquake disaster, along with the total population moved from those areas.","SELECT d.location, SUM(p.total_population_moved) AS total_population_moved
+FROM Disaster_Information d
+JOIN Population_Movement p ON d.location = p.origin AND d.timestamp = p.timestamp
+WHERE d.disaster_type = 'Earthquake'
+GROUP BY d.location
+ORDER BY d.timestamp DESC
+LIMIT 1;"
+20," Show the public services availability in areas affected by the most recent typhoon disaster, including the service type, availability status, and service provider.","SELECT s.service_type, s.availability, s.service_provider
+FROM Public_Services_Availability s
+JOIN Disaster_Information d ON s.location = d.location AND s.timestamp = d.timestamp
+WHERE d.disaster_type = 'Typhoon'
+ORDER BY d.timestamp DESC
+LIMIT 1;"
+21," Find the top 5 users who have posted the most negative sentiment tweets related to the earthquake disaster in Hualien County, along with their average sentiment score and location.","SELECT u.user_id, AVG(t.sentiment_score) AS avg_sentiment, u.location, COUNT(*) AS tweet_count
+FROM Disaster_Tweets t
+JOIN (
+  SELECT user_id, location
+  FROM Disaster_Tweets
+  WHERE location LIKE '%Hualien County%' AND tweet_text LIKE '%earthquake%'
+  GROUP BY user_id, location
+) u ON t.user_id = u.user_id AND t.location = u.location
+WHERE t.location LIKE '%Hualien County%' AND t.tweet_text LIKE '%earthquake%' AND t.sentiment_score < 0
+GROUP BY u.user_id, u.location
+ORDER BY tweet_count DESC
+LIMIT 5;"
+22," List the disaster types, affected areas, and infrastructure status for disasters that have impacted areas with a population over 100,000.","SELECT d.disaster_type, a.affected_areas, a.infrastructure_status
+FROM Disaster_Information d
+JOIN Damage_Assessment a ON d.location = a.location AND d.timestamp = a.timestamp
+WHERE d.affected_population > 100000;"
+23," Find the emergency contacts and community support services offering psychological counseling in Tainan City, along with their contact information and service hours.","SELECT c.contact_info, c.organization_name, s.service_type, s.service_hours
+FROM Emergency_Contacts c
+JOIN Community_Support_Services s ON c.location = s.location
+WHERE c.location LIKE '%Tainan City%' AND (c.contact_type LIKE '%Psychological Support%' OR s.description LIKE '%counseling%');"
+24, Show the emergency response plans and disaster recovery resources available for the most recent earthquake disaster in Hualien County.,"SELECT p.plan_type, p.description, p.responsible_agency, r.resource_type, r.availability_status, r.distribution_process
+FROM Emergency_Response_Plans p
+JOIN Disaster_Recovery_Resources r ON p.location = r.location
+WHERE p.location LIKE '%Hualien County%' AND p.plan_type LIKE '%Earthquake%'
+ORDER BY p.timestamp DESC, r.timestamp DESC
+LIMIT 1;"
+25," List the safety procedures, disaster training programs, and responsible authorities related to earthquake preparedness in Tainan City.","SELECT p.procedure_type, p.description, p.responsible_authority, t.program_type, t.description AS program_description, t.trainers_involved
+FROM Safety_Procedures p
+JOIN Disaster_Training_Programs t ON p.location = t.location
+WHERE p.location LIKE '%Tainan City%' AND p.procedure_type LIKE '%Earthquake%' AND t.program_type LIKE '%Earthquake%';"
+26," Show the details of donations received for the most recent earthquake disaster in Hualien County, along with the contact information of the recipient resource centers.","SELECT d.donor_id, d.donation_type, d.quantity, d.distribution_status, c.contact_info
+FROM Donations d
+JOIN Disaster_Information i ON d.recipient_org = i.disaster_id
+JOIN Resource_Centers c ON i.location = c.location
+WHERE i.location LIKE '%Hualien County%' AND i.disaster_type = 'Earthquake'
+ORDER BY d.timestamp DESC
+LIMIT 1;"
+27," Find the emergency response team assignments involving international aid organizations for the typhoon disaster in Kaohsiung City, along with any government alerts and instructions given.","SELECT a.task_description, a.team_leader, a.team_members, g.instructions_given
+FROM Emergency_Response_Team_Assignments a
+JOIN Government_Alerts g ON a.location = g.affected_area
+WHERE a.location LIKE '%Kaohsiung City%'
+AND a.task_description LIKE '%international aid%'
+AND a.task_description LIKE '%typhoon%'
+AND g.alert_type LIKE '%Typhoon%';"
+28, Show the disaster relief fund allocations for international aid organizations assisting with the earthquake disaster in Hualien County.,"SELECT f.fund_type, f.amount_allocated, f.allocation_purpose, f.beneficiary_criteria
+FROM Disaster_Relief_Fund_Allocation f
+JOIN Disaster_Information i ON f.allocation_purpose LIKE CONCAT('%', i.location, '%')
+WHERE f.allocation_purpose LIKE '%international aid%'
+AND i.disaster_type = 'Earthquake'
+AND i.location LIKE '%Hualien County%';"
+29," List the risk mitigation strategies related to earthquake preparedness in Tainan City, along with the disaster type and location.","SELECT s.strategy_type, s.description, s.implementation_status, i.disaster_type, i.location
+FROM Risk_Mitigation_Strategies s
+JOIN Disaster_Information i ON s.location = i.location
+WHERE s.location LIKE '%Tainan City%'
+AND s.strategy_type LIKE '%Earthquake%'
+AND i.disaster_type = 'Earthquake';"
+30," Find the government alerts issued for Kaohsiung City related to typhoon disasters, including their severity and instructions given.","SELECT g.alert_type, g.severity, g.instructions_given, i.location
+FROM Government_Alerts g
+JOIN Disaster_Information i ON g.affected_area = i.location
+WHERE g.affected_area LIKE '%Kaohsiung City%'
+AND g.alert_type LIKE '%Typhoon%'
+AND i.disaster_type = 'Typhoon';"
+31," Show the public safety announcements made in Hualien County during the earthquake disaster, including their message and audience reach.","SELECT p.announcement_type, p.message, p.audience_reach
+FROM Public_Safety_Announcements p
+JOIN Disaster_Information i ON p.location = i.location
+WHERE p.location LIKE '%Hualien County%'
+AND p.announcement_type LIKE '%Earthquake%'
+AND i.disaster_type = 'Earthquake';"
+32, List the emergency response assignments in Tainan City that involve crisis communication tasks related to the typhoon disaster.,"SELECT a.task_description, a.team_leader, a.team_members
+FROM Emergency_Response_Team_Assignments a
+JOIN Disaster_Information i ON a.location = i.location
+WHERE a.location LIKE '%Tainan City%'
+AND a.task_description LIKE '%crisis communication%'
+AND a.task_description LIKE '%typhoon%'
+AND i.disaster_type = 'Typhoon';"
+33," Find the locations affected by the most recent earthquake disaster, along with the total population moved.","SELECT d.location, p.total_population_moved
+FROM Disaster_Information d
+JOIN Population_Movement p ON d.location = p.origin AND d.timestamp = p.timestamp
+WHERE d.disaster_type = 'Earthquake'
+ORDER BY d.timestamp DESC
+LIMIT 1;"
+34," Show the public services availability in areas affected by the most recent typhoon disaster, including the service type and availability status.","SELECT s.service_type, s.availability
+FROM Public_Services_Availability s
+JOIN Disaster_Information i ON s.location = i.location AND s.timestamp = i.timestamp
+WHERE i.disaster_type = 'Typhoon'
+ORDER BY i.timestamp DESC
+LIMIT 1;"
+35," What are the recent tweets about disasters along with their timestamp, location, sentiment score, retweet count, and favorite count?","SELECT tweet_text, timestamp, location, sentiment_score, retweet_count, favorite_count
+FROM Disaster_Tweets
+ORDER BY timestamp DESC;"
+36," Can you list the recent disaster information, including the disaster type, location, severity, timestamp, affected population, and relief status?","SELECT disaster_type, location, severity, timestamp, affected_population, relief_status
+FROM Disaster_Information
+ORDER BY timestamp DESC;"
+37," What are the recent tweets about disasters along with their timestamp, location, sentiment score, retweet count, and favorite count?","SELECT tweet_text, timestamp, location, sentiment_score, retweet_count, favorite_count
+FROM Disaster_Tweets
+ORDER BY timestamp DESC;"
+38," Can you list the recent disaster information, including the disaster type, location, severity, timestamp, affected population, and relief status?","SELECT disaster_type, location, severity, timestamp, affected_population, relief_status
+FROM Disaster_Information
+ORDER BY timestamp DESC;"
+39," List the casualties reported, including casualty type, timestamp, location, severity, medical condition, and treatment given.","SELECT casualty_type, timestamp, location, severity, medical_condition, treatment_given
+FROM Casualties
+ORDER BY timestamp DESC;"
+40," Show the details of evacuation centers, including location, capacity, resources available, and current occupancy.","SELECT location, capacity, resources_available, current_occupancy
+FROM Evacuation_Centers;"
+41," What are the recent tweets about disasters along with their timestamp, location, sentiment score, retweet count, and favorite count?","SELECT tweet_text, timestamp, location, sentiment_score, retweet_count, favorite_count
+FROM Disaster_Tweets
+ORDER BY timestamp DESC;"
+42," Can you list the recent disaster information, including the disaster type, location, severity, timestamp, affected population, and relief status?","SELECT disaster_type, location, severity, timestamp, affected_population, relief_status
+FROM Disaster_Information
+ORDER BY timestamp DESC;"
+43," What are the available resources and services offered at each resource center, along with their contact information and capacity?","SELECT location, services_offered, contact_info, capacity
+FROM Resource_Centers;"
+44," List the emergency requests along with their requester ID, request text, timestamp, location, urgency level, and status.","SELECT requester_id, request_text, timestamp, location, urgency_level, status
+FROM Emergency_Requests
+ORDER BY timestamp DESC;"
+45," Retrieve the emergency responses, including responder ID, response text, timestamp, location, action taken, and outcome.","SELECT responder_id, response_text, timestamp, location, action_taken, outcome
+FROM Emergency_Responses
+ORDER BY timestamp DESC;"
+46," Provide an assessment of the damage, including damage type, severity, location, timestamp, affected areas, and infrastructure status.","SELECT damage_type, severity, location, timestamp, affected_areas, infrastructure_status
+FROM Damage_Assessment
+ORDER BY timestamp DESC;"
+47," Retrieve information about donations, including donor ID, donation type, quantity, timestamp, recipient organization, distribution status, and feedback.","SELECT donor_id, donation_type, quantity, timestamp, recipient_org, distribution_status, feedback
+FROM Donations
+ORDER BY timestamp DESC;"
+48," List volunteers' details, including volunteer ID, skills/expertise, availability, location, timestamp, assigned task, and completed task count.","SELECT volunteer_id, skills_expertise, availability, location, timestamp, assigned_task, completed_task_count
+FROM Volunteers
+ORDER BY timestamp DESC;"
+49," Retrieve government alerts, including alert type, affected area, timestamp, severity, instructions given, and response actions taken.","SELECT alert_type, affected_area, timestamp, severity, instructions_given, response_actions_taken
+FROM Government_Alerts
+ORDER BY timestamp DESC;"
+50," Show the current status of infrastructure, including infrastructure type, status, location, timestamp, maintenance schedule, and repair priority.","SELECT infrastructure_type, status, location, timestamp, maintenance_schedule, repair_priority
+FROM Infrastructure_Status
+ORDER BY timestamp DESC;"
+51," Provide weather reports, including weather type, conditions, location, timestamp, temperature, humidity, and wind speed.","SELECT weather_type, conditions, location, timestamp, temperature, humidity, wind_speed
+FROM Weather_Reports
+ORDER BY timestamp DESC;"
+52," Retrieve information about medical assistance available, including medical facility, type of assistance, availability, location, timestamp, medical staff count, and available beds.","SELECT medical_facility, type_of_assistance, availability, location, timestamp, medical_staff_count, available_beds
+FROM Medical_Assistance
+ORDER BY timestamp DESC;"
+53," List details of population movement, including movement type, origin, destination, timestamp, transportation mode, and total population moved.","SELECT movement_type, origin, destination, timestamp, transportation_mode, total_population_moved
+FROM Population_Movement
+ORDER BY timestamp DESC;"
+54," Retrieve evacuation routes information, including route type, description, location, accessibility status, and alternative routes.","SELECT route_type, description, location, accessibility_status, alternative_routes
+FROM Evacuation_Routes;"
+55," Show emergency response plans, including plan type, description, location, activation status, and responsible agency.","SELECT plan_type, description, location, activation_status, responsible_agency
+FROM Emergency_Response_Plans;"
+56," List disaster training programs, including program type, description, location, training date, and trainers involved.","SELECT program_type, description, location, training_date, trainers_involved
+FROM Disaster_Training_Programs;"
+57," Provide information about community support services, including service type, description, location, service hours, and eligibility criteria.","SELECT service_type, description, location, service_hours, eligibility_criteria
+FROM Community_Support_Services;"
+58," Show disaster recovery resources, including resource type, description, location, availability status, and distribution process.","SELECT resource_type, description, location, availability_status, distribution_process
+FROM Disaster_Recovery_Resources;"
+59," Retrieve public health information, including topic, description, location, health advisory status, and precautionary measures.","SELECT topic, description, location, health_advisory_status, precautionary_measures
+FROM Public_Health_Information;"
+60," List public safety announcements, including announcement type, message, location, broadcast datetime, and audience reach.","SELECT service_type, availability, location, timestamp, service_provider, service_hours
+FROM Public_Services_Availability
+ORDER BY timestamp DESC;"
+61," Provide information about the availability of public services, including service type, availability, location, timestamp, service provider, and service hours.","SELECT utility_type, status, location, timestamp, outage_duration, estimated_time_to_restore
+FROM Utilities_Status
+ORDER BY timestamp DESC;"
+62," Show the current status of utilities, including utility type, status, location, timestamp, outage duration, and estimated time to restore.","SELECT contact_type, contact_info, location, organization_name, designation
+FROM Emergency_Contacts;"
+63," Retrieve emergency contacts, including contact type, contact information, location, organization name, and designation.","SELECT procedure_type, description, location, responsible_authority, emergency_contact
+FROM Safety_Procedures;"
+64," List safety procedures, including procedure type, description, location, responsible authority, and emergency contact.","SELECT item_name, quantity_available, location, expiry_date, replenishment_status
+FROM Emergency_Kits_Inventory;"
+65," Provide details of emergency kits inventory, including item name, quantity available, location, expiry date, and replenishment status.","SELECT announcement_type, message, location, broadcast_datetime, audience_reach
+FROM Public_Safety_Announcements;"
+66," Show disaster relief fund allocation details, including fund type, amount allocated, location, allocation purpose, and beneficiary criteria.","SELECT fund_type, amount_allocated, location, allocation_purpose, beneficiary_criteria
+FROM Disaster_Relief_FundAllocation;"
+67," Retrieve emergency response assignments, including team ID, task description, location, team leader, and team members.","SELECT team_id, task_description, location, team_leader, team_members
+FROM Emergency_ResponseAssignments;"
+68," Provide information about risk mitigation strategies, including strategy type, description, location, implementation status, and risk rating.","SELECT strategy_type, description, location, implementation_status, risk_rating
+FROM Risk_Mitigation_Strategies;"
