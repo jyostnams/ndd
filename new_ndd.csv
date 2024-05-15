@@ -1,4 +1,4 @@
-SlNo,Natural_Language_Questions,SQL_Query
+slno,question,sql
 1,"""What are the most recent tweets about the typhoon disaster in Kaohsiung City, along with their sentiment scores and retweet/favorite counts?""","""SELECT tweet_text, sentiment_score, retweet_count, favorite_count
 FROM Disaster_Tweets
 WHERE location LIKE '%Kaohsiung City%' AND tweet_text LIKE '%typhoon%'
