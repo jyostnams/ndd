@@ -1,0 +1,571 @@
+slno,question,sql
+69,"""What are the recent tweets about the Hualien earthquake, along with their sentiment scores?""","""SELECT tweet_text, sentiment_score
+FROM Disaster_Tweets
+WHERE location LIKE '%Hualien%' AND tweet_text LIKE '%earthquake%'
+ORDER BY timestamp DESC;"""
+
+70,"""Retrieve the tweets with the highest retweet count related to the Hualien earthquake.""","""SELECT tweet_text, retweet_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Hualien%' AND tweet_text LIKE '%earthquake%'
+ORDER BY retweet_count DESC
+LIMIT 3;"""
+
+71,"""List the types of natural disasters that have affected the Hualien area, along with the affected population and relief status for each disaster.""","""SELECT d.disaster_type, d.affected_population, d.relief_status
+FROM Disaster_Information d
+WHERE d.location LIKE '%Hualien%';"""
+
+72,"""Show the infrastructure status for the areas affected by the most recent earthquake in Hualien.""","""SELECT d.affected_areas, d.infrastructure_status
+FROM Damage_Assessment d
+WHERE d.damage_type = 'Earthquake' AND d.location LIKE '%Hualien%'
+ORDER BY d.timestamp DESC
+LIMIT 1;"""
+
+73,"""Find the emergency contacts who can provide psychological support services in Hualien.""","""SELECT contact_info, organization_name, designation
+FROM Emergency_Contacts
+WHERE location LIKE '%Hualien%' AND contact_type LIKE '%Psychological Support%';"""
+
+74,"""List the community support services offering counseling services in Hualien, along with their service hours.""","""SELECT service_type, description, service_hours
+FROM Community_Support_Services
+WHERE location LIKE '%Hualien%' AND description LIKE '%counseling%';"""
+
+75,"""Show the emergency response plans for earthquake disasters in Hualien, including their descriptions and responsible agencies.""","""SELECT plan_type, description, responsible_agency
+FROM Emergency_Response_Plans
+WHERE location LIKE '%Hualien%' AND plan_type LIKE '%Earthquake%';"""
+
+76,"""List the disaster recovery resources available in Hualien, along with their availability status and distribution process.""","""SELECT resource_type, description, location, availability_status, distribution_process
+FROM Disaster_Recovery_Resources
+WHERE location LIKE '%Hualien%';"""
+
+77,"""Find the safety procedures related to earthquake preparedness in Hualien, including their descriptions and responsible authorities.""","""SELECT procedure_type, description, responsible_authority
+FROM Safety_Procedures
+WHERE location LIKE '%Hualien%' AND procedure_type LIKE '%Earthquake%';"""
+
+78,"""List the disaster training programs scheduled in Hualien for earthquake preparedness, including their descriptions and training dates.""","""SELECT program_type, description, training_date
+FROM Disaster_Training_Programs
+WHERE location LIKE '%Hualien%' AND program_type LIKE '%Earthquake%';"""
+
+79,"""Show the details of donations received for the earthquake disaster in Hualien, including the donor, donation type, quantity, and distribution status.""","""SELECT d.donor_id, d.donation_type, d.quantity, d.distribution_status
+FROM Donations d
+JOIN Disaster_Information i ON d.recipient_org = i.disaster_id
+WHERE i.location LIKE '%Hualien%' AND i.disaster_type = 'Earthquake';"""
+
+80,"""List the resource centers in Hualien that have medical supplies available, along with their contact information.""","""SELECT location, contact_info
+FROM Resource_Centers
+WHERE location LIKE '%Hualien%' AND available_resources LIKE '%medical%';"""
+
+81,"""Find the emergency response team assignments involving international aid organizations for the earthquake disaster in Hualien.""","""SELECT task_description, team_leader, team_members
+FROM Emergency_Response_Team_Assignments
+WHERE location LIKE '%Hualien%' AND task_description LIKE '%international aid%' AND task_description LIKE '%earthquake%';"""
+
+82,"""Show the disaster relief fund allocations for international aid organizations assisting with the earthquake disaster in Hualien.""","""SELECT fund_type, amount_allocated, allocation_purpose, beneficiary_criteria
+FROM Disaster_Relief_Fund_Allocation
+WHERE allocation_purpose LIKE '%international aid%' AND allocation_purpose LIKE '%earthquake%' AND allocation_purpose LIKE '%Hualien%';"""
+
+83,"""List the risk mitigation strategies related to earthquake preparedness in Hualien, along with their descriptions and implementation status.""","""SELECT strategy_type, description, implementation_status
+FROM Risk_Mitigation_Strategies
+WHERE location LIKE '%Hualien%' AND strategy_type LIKE '%Earthquake%';"""
+
+84,"""Find the government alerts issued for Hualien related to earthquake disasters, including their severity and instructions given.""","""SELECT alert_type, severity, instructions_given
+FROM Government_Alerts
+WHERE affected_area LIKE '%Hualien%' AND alert_type LIKE '%Earthquake%';"""
+
+85,"""Show the public safety announcements made in Hualien during the earthquake disaster, including their message and audience reach.""","""SELECT announcement_type, message, audience_reach
+FROM Public_Safety_Announcements
+WHERE location LIKE '%Hualien%' AND announcement_type LIKE '%Earthquake%';"""
+
+86,"""What were the maximum tsunami heights observed in different places in Taiwan after the 2024 Hualien earthquake?""","""SELECT location, maximum_tsunami_height
+FROM Tsunami_Data
+WHERE event_name = '2024 Hualien earthquake';"""
+
+87,"""How many landslides were recorded in Taiwan following the 2024 Hualien earthquake?""","""SELECT COUNT(*)
+FROM Landslide_Data
+WHERE event_name = '2024 Hualien earthquake';"""
+
+88,"""What was the total damage to agriculture in Hualien County after the 2024 Hualien earthquake?""","""SELECT SUM(damage_amount)
+FROM Agricultural_Damage
+WHERE county = 'Hualien' AND event_name = '2024 Hualien earthquake';"""
+
+89,"""How many people were stranded or trapped in Taiwan after the 2024 Hualien earthquake?""","""SELECT SUM(number_of_people)
+FROM Stranded_People
+WHERE event_name = '2024 Hualien earthquake';"""
+
+90,"""What was the total damage to public infrastructure in Taiwan after the 2024 Hualien earthquake?""","""SELECT SUM(damage_amount)
+FROM Public_Infrastructure_Damage
+WHERE event_name = '2024 Hualien earthquake';"""
+
+91,"""How many aftershocks were recorded in Taiwan following the 2024 Hualien earthquake?""","""SELECT COUNT(*)
+FROM Aftershock_Data
+WHERE main_event_name = '2024 Hualien earthquake';"""
+
+92,"""What was the total amount of donations received for the 2024 Hualien earthquake relief efforts?""","""SELECT SUM(donation_amount)
+FROM Earthquake_Donations
+WHERE event_name = '2024 Hualien earthquake';"""
+
+93,"""How many buildings were damaged or collapsed in Hualien City after the 2024 Hualien earthquake?""","""SELECT COUNT(*)
+FROM Building_Damage
+WHERE city = 'Hualien' AND event_name = '2024 Hualien earthquake';"""
+
+94,"""How many people were evacuated from their homes in Taiwan after the 2024 Hualien earthquake?""","""SELECT SUM(number_of_people)
+FROM Evacuated_People
+WHERE event_name = '2024 Hualien earthquake';"""
+
+95,"""What was the total amount of disaster relief funding allocated by the Taiwanese government for the 2024 Hualien earthquake?""","""SELECT SUM(funding_amount)
+FROM Disaster_Relief_Funding
+WHERE event_name = '2024 Hualien earthquake';"""
+
+96,"""How many schools were damaged in Taiwan after the 2024 Hualien earthquake?""","""SELECT COUNT(*)
+FROM School_Damage
+WHERE event_name = '2024 Hualien earthquake';"""
+
+97,"""What was the total amount of economic losses in Taiwan after the 2024 Hualien earthquake?""","""SELECT SUM(economic_loss)
+FROM Economic_Loss
+WHERE event_name = '2024 Hualien earthquake';"""
+
+98,"""How many people were injured in Taroko National Park after the 2024 Hualien earthquake?""","""SELECT COUNT(*)
+FROM Injured_People
+WHERE location = 'Taroko National Park' AND event_name = '2024 Hualien earthquake';"""
+
+99,"""What are the recent tweets about the typhoon disaster in Japan, along with their sentiment scores?""","""SELECT tweet_text, sentiment_score
+FROM Disaster_Tweets
+WHERE location LIKE '%Japan%' AND tweet_text LIKE '%typhoon%'
+ORDER BY timestamp DESC;"""
+
+100,"""Retrieve the tweets with the highest retweet count related to the typhoon disaster in Japan.""","""SELECT tweet_text, retweet_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Japan%' AND tweet_text LIKE '%typhoon%'
+ORDER BY retweet_count DESC
+LIMIT 3;"""
+
+101,"""List the types of natural disasters that have affected the Tokyo area, along with the affected population and relief status for each disaster.""","""SELECT d.disaster_type, d.affected_population, d.relief_status
+FROM Disaster_Information d
+WHERE d.location LIKE '%Tokyo%';"""
+
+102,"""Show the infrastructure status for the areas affected by the most recent earthquake in Japan.""","""SELECT d.affected_areas, d.infrastructure_status
+FROM Damage_Assessment d
+WHERE d.damage_type = 'Earthquake' AND d.location LIKE '%Japan%'
+ORDER BY d.timestamp DESC
+LIMIT 1;"""
+
+103,"""Find the emergency contacts who can provide psychological support services in Seoul.""","""SELECT contact_info, organization_name, designation
+FROM Emergency_Contacts
+WHERE location LIKE '%Seoul%' AND contact_type LIKE '%Psychological Support%';"""
+
+104,"""List the community support services offering counseling services in Busan, along with their service hours.""","""SELECT service_type, description, service_hours
+FROM Community_Support_Services
+WHERE location LIKE '%Busan%' AND description LIKE '%counseling%';"""
+
+105,"""Show the emergency response plans for typhoon disasters in Japan, including their descriptions and responsible agencies.""","""SELECT plan_type, description, responsible_agency
+FROM Emergency_Response_Plans
+WHERE location LIKE '%Japan%' AND plan_type LIKE '%Typhoon%';"""
+
+106,"""List the disaster recovery resources available in Japan, along with their availability status and distribution process.""","""SELECT resource_type, description, location, availability_status, distribution_process
+FROM Disaster_Recovery_Resources
+WHERE location LIKE '%Japan%';"""
+
+107,"""Find the safety procedures related to earthquake preparedness in Japan, including their descriptions and responsible authorities.""","""SELECT procedure_type, description, responsible_authority
+FROM Safety_Procedures
+WHERE location LIKE '%Japan%' AND procedure_type LIKE '%Earthquake%';"""
+
+108,"""List the disaster training programs scheduled in Japan for earthquake preparedness, including their descriptions and training dates.""","""SELECT program_type, description, training_date
+FROM Disaster_Training_Programs
+WHERE location LIKE '%Japan%' AND program_type LIKE '%Earthquake%';"""
+
+109,"""Show the details of donations received for the typhoon disaster in Japan, including the donor, donation type, quantity, and distribution status.""","""SELECT d.donor_id, d.donation_type, d.quantity, d.distribution_status
+FROM Donations d
+JOIN Disaster_Information i ON d.recipient_org = i.disaster_id
+WHERE i.location LIKE '%Japan%' AND i.disaster_type = 'Typhoon';"""
+
+110,"""List the resource centers in Japan that have medical supplies available, along with their contact information.""","""SELECT location, contact_info
+FROM Resource_Centers
+WHERE location LIKE '%Japan%' AND available_resources LIKE '%medical%';"""
+
+111,"""Find the emergency response team assignments involving international aid organizations for the typhoon disaster in Japan.""","""SELECT task_description, team_leader, team_members
+FROM Emergency_Response_Team_Assignments
+WHERE location LIKE '%Japan%' AND task_description LIKE '%international aid%' AND task_description LIKE '%typhoon%';"""
+
+112,"""Show the disaster relief fund allocations for international aid organizations assisting with the typhoon disaster in Japan.""","""SELECT fund_type, amount_allocated, allocation_purpose, beneficiary_criteria
+FROM Disaster_Relief_Fund_Allocation
+WHERE allocation_purpose LIKE '%international aid%' AND allocation_purpose LIKE '%typhoon%' AND allocation_purpose LIKE '%Japan%';"""
+
+113,"""List the risk mitigation strategies related to earthquake preparedness in Japan, along with their descriptions and implementation status.""","""SELECT strategy_type, description, implementation_status
+FROM Risk_Mitigation_Strategies
+WHERE location LIKE '%Japan%' AND strategy_type LIKE '%Earthquake%';"""
+
+114,"""Find the government alerts issued for Japan related to earthquake disasters, including their severity and instructions given.""","""SELECT alert_type, severity, instructions_given
+FROM Government_Alerts
+WHERE affected_area LIKE '%Japan%' AND alert_type LIKE '%Earthquake%';"""
+
+115,"""Show the public safety announcements made in Japan during the typhoon disaster, including their message and audience reach.""","""SELECT announcement_type, message, audience_reach
+FROM Public_Safety_Announcements
+WHERE location LIKE '%Japan%' AND announcement_type LIKE '%Typhoon%';"""
+
+116,"""What were the maximum tsunami heights observed in different places in Japan after the 2011 Tohoku earthquake?""","""SELECT location, maximum_tsunami_height
+FROM Tsunami_Data
+WHERE event_name = '2011 Tohoku earthquake';"""
+
+117,"""How many landslides were recorded in Japan following the 2018 Hokkaido earthquake?""","""SELECT COUNT(*)
+FROM Landslide_Data
+WHERE event_name = '2018 Hokkaido earthquake';"""
+
+118,"""What was the total damage to agriculture in Japan after the 2011 Tohoku earthquake and tsunami?""","""SELECT SUM(damage_amount)
+FROM Agricultural_Damage
+WHERE event_name = '2011 Tohoku earthquake and tsunami';"""
+
+119,"""How many people were stranded or trapped in Japan after the 2011 Tohoku earthquake and tsunami?""","""SELECT SUM(number_of_people)
+FROM Stranded_People
+WHERE event_name = '2011 Tohoku earthquake and tsunami';"""
+
+120,"""What was the total damage to public infrastructure in Japan after the 2018 Hokkaido earthquake?""","""SELECT SUM(damage_amount)
+FROM Public_Infrastructure_Damage
+WHERE event_name = '2018 Hokkaido earthquake';"""
+
+121,"""How many aftershocks were recorded in Japan following the 2011 Tohoku earthquake?""","""SELECT COUNT(*)
+FROM Aftershock_Data
+WHERE main_event_name = '2011 Tohoku earthquake';"""
+
+122,"""What was the total amount of donations received for the 2018 Hokkaido earthquake relief efforts?""","""SELECT SUM(donation_amount)
+FROM Earthquake_Donations
+WHERE event_name = '2018 Hokkaido earthquake';"""
+
+123,"""How many buildings were damaged or collapsed in Japan after the 2011 Tohoku earthquake and tsunami?""","""SELECT COUNT(*)
+FROM Building_Damage
+WHERE event_name = '2011 Tohoku earthquake and tsunami';"""
+
+124,"""How many people were evacuated from their homes in Japan after the 2018 Hokkaido earthquake?""","""SELECT SUM(number_of_people)
+FROM Evacuated_People
+WHERE event_name = '2018 Hokkaido earthquake';"""
+
+125,"""What was the total amount of disaster relief funding allocated by the Japanese government for the 2011 Tohoku earthquake and tsunami?""","""SELECT SUM(funding_amount)
+FROM Disaster_Relief_Funding
+WHERE event_name = '2011 Tohoku earthquake and tsunami';"""
+
+126,"""How many schools were damaged in Japan after the 2018 Hokkaido earthquake?""","""SELECT COUNT(*)
+FROM School_Damage
+WHERE event_name = '2018 Hokkaido earthquake';"""
+
+127,"""What was the total amount of economic losses in Japan after the 2011 Tohoku earthquake and tsunami?""","""SELECT SUM(economic_loss)
+FROM Economic_Loss
+WHERE event_name = '2011 Tohoku earthquake and tsunami';"""
+
+128,"""How many people were injured in Japan after the 2018 Hokkaido earthquake?""","""SELECT COUNT(*)
+FROM Injured_People
+WHERE event_name = '2018 Hokkaido earthquake';"""
+
+129,"""What are the recent tweets about the typhoon disaster in Korea, along with their sentiment scores?""","""SELECT tweet_text, sentiment_score
+FROM Disaster_Tweets
+WHERE location LIKE '%Korea%' AND tweet_text LIKE '%typhoon%'
+ORDER BY timestamp DESC;"""
+
+130,"""Retrieve the tweets with the highest retweet count related to the typhoon disaster in Korea.""","""SELECT tweet_text, retweet_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Korea%' AND tweet_text LIKE '%typhoon%'
+ORDER BY retweet_count DESC
+LIMIT 3;"""
+
+131,"""List the types of natural disasters that have affected the Seoul area, along with the affected population and relief status for each disaster.""","""SELECT d.disaster_type, d.affected_population, d.relief_status
+FROM Disaster_Information d
+WHERE d.location LIKE '%Seoul%';"""
+
+132,"""Show the infrastructure status for the areas affected by the most recent earthquake in Korea.""","""SELECT d.affected_areas, d.infrastructure_status
+FROM Damage_Assessment d
+WHERE d.damage_type = 'Earthquake' AND d.location LIKE '%Korea%'
+ORDER BY d.timestamp DESC
+LIMIT 1;"""
+
+133,"""Find the emergency contacts who can provide psychological support services in Busan.""","""SELECT contact_info, organization_name, designation
+FROM Emergency_Contacts
+WHERE location LIKE '%Busan%' AND contact_type LIKE '%Psychological Support%';"""
+
+134,"""List the community support services offering counseling services in Daegu, along with their service hours.""","""SELECT service_type, description, service_hours
+FROM Community_Support_Services
+WHERE location LIKE '%Daegu%' AND description LIKE '%counseling%';"""
+
+135,"""Show the emergency response plans for typhoon disasters in Korea, including their descriptions and responsible agencies.""","""SELECT plan_type, description, responsible_agency
+FROM Emergency_Response_Plans
+WHERE location LIKE '%Korea%' AND plan_type LIKE '%Typhoon%';"""
+
+136,"""List the disaster recovery resources available in Korea, along with their availability status and distribution process.""","""SELECT resource_type, description, location, availability_status, distribution_process
+FROM Disaster_Recovery_Resources
+WHERE location LIKE '%Korea%';"""
+
+137,"""Find the safety procedures related to earthquake preparedness in Korea, including their descriptions and responsible authorities.""","""SELECT procedure_type, description, responsible_authority
+FROM Safety_Procedures
+WHERE location LIKE '%Korea%' AND procedure_type LIKE '%Earthquake%';"""
+
+138,"""List the disaster training programs scheduled in Korea for earthquake preparedness, including their descriptions and training dates.""","""SELECT program_type, description, training_date
+FROM Disaster_Training_Programs
+WHERE location LIKE '%Korea%' AND program_type LIKE '%Earthquake%';"""
+
+139,"""Show the details of donations received for the typhoon disaster in Korea, including the donor, donation type, quantity, and distribution status.""","""SELECT d.donor_id, d.donation_type, d.quantity, d.distribution_status
+FROM Donations d
+JOIN Disaster_Information i ON d.recipient_org = i.disaster_id
+WHERE i.location LIKE '%Korea%' AND i.disaster_type = 'Typhoon';"""
+
+140,"""List the resource centers in Korea that have medical supplies available, along with their contact information.""","""SELECT location, contact_info
+FROM Resource_Centers
+WHERE location LIKE '%Korea%' AND available_resources LIKE '%medical%';"""
+
+141,"""Find the emergency response team assignments involving international aid organizations for the typhoon disaster in Korea.""","""SELECT task_description, team_leader, team_members
+FROM Emergency_Response_Team_Assignments
+WHERE location LIKE '%Korea%' AND task_description LIKE '%international aid%' AND task_description LIKE '%typhoon%';"""
+
+142,"""Show the disaster relief fund allocations for international aid organizations assisting with the typhoon disaster in Korea.""","""SELECT fund_type, amount_allocated, allocation_purpose, beneficiary_criteria
+FROM Disaster_Relief_Fund_Allocation
+WHERE allocation_purpose LIKE '%international aid%' AND allocation_purpose LIKE '%typhoon%' AND allocation_purpose LIKE '%Korea%';"""
+
+143,"""List the risk mitigation strategies related to earthquake preparedness in Korea, along with their descriptions and implementation status.""","""SELECT strategy_type, description, implementation_status
+FROM Risk_Mitigation_Strategies
+WHERE location LIKE '%Korea%' AND strategy_type LIKE '%Earthquake%';"""
+
+144,"""Find the government alerts issued for Korea related to earthquake disasters, including their severity and instructions given.""","""SELECT alert_type, severity, instructions_given
+FROM Government_Alerts
+WHERE affected_area LIKE '%Korea%' AND alert_type LIKE '%Earthquake%';"""
+
+145,"""Show the public safety announcements made in Korea during the typhoon disaster, including their message and audience reach.""","""SELECT announcement_type, message, audience_reach
+FROM Public_Safety_Announcements
+WHERE location LIKE '%Korea%' AND announcement_type LIKE '%Typhoon%';"""
+
+146,"""What were the maximum tsunami heights observed in different places in Korea after the 2011 East Japan earthquake?""","""SELECT location, maximum_tsunami_height
+FROM Tsunami_Data
+WHERE event_name = '2011 East Japan earthquake';"""
+
+147,"""How many landslides were recorded in Korea following the 2018 Typhoon Soulik?""","""SELECT COUNT(*)
+FROM Landslide_Data
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+148,"""What was the total damage to agriculture in Korea after the 2018 Typhoon Soulik?""","""SELECT SUM(damage_amount)
+FROM Agricultural_Damage
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+149,"""How many people were stranded or trapped in Korea after the 2018 Typhoon Soulik?""","""SELECT SUM(number_of_people)
+FROM Stranded_People
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+150,"""What was the total damage to public infrastructure in Korea after the 2018 Typhoon Soulik?""","""SELECT SUM(damage_amount)
+FROM Public_Infrastructure_Damage
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+151,"""How many aftershocks were recorded in Korea following the 2016 Gyeongju earthquake?""","""SELECT COUNT(*)
+FROM Aftershock_Data
+WHERE main_event_name = '2016 Gyeongju earthquake';"""
+
+152,"""What was the total amount of donations received for the 2018 Typhoon Soulik relief efforts?""","""SELECT SUM(donation_amount)
+FROM Earthquake_Donations
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+153,"""How many buildings were damaged or collapsed in Korea after the 2018 Typhoon Soulik?""","""SELECT COUNT(*)
+FROM Building_Damage
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+154,"""How many people were evacuated from their homes in Korea after the 2018 Typhoon Soulik?""","""SELECT SUM(number_of_people)
+FROM Evacuated_People
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+155,"""What was the total amount of disaster relief funding allocated by the Korean government for the 2018 Typhoon Soulik?""","""SELECT SUM(funding_amount)
+FROM Disaster_Relief_Funding
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+156,"""How many schools were damaged in Korea after the 2018 Typhoon Soulik?""","""SELECT COUNT(*)
+FROM School_Damage
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+157,"""What was the total amount of economic losses in Korea after the 2018 Typhoon Soulik?""","""SELECT SUM(economic_loss)
+FROM Economic_Loss
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+158,"""How many people were injured in Korea after the 2018 Typhoon Soulik?""","""SELECT COUNT(*)
+FROM Injured_People
+WHERE event_name = '2018 Typhoon Soulik';"""
+
+159,"""What are the recent tweets about the typhoon disaster in Taiwan, along with their sentiment scores?""","""SELECT tweet_text, sentiment_score
+FROM Disaster_Tweets
+WHERE location LIKE '%Taiwan%' AND tweet_text LIKE '%typhoon%'
+ORDER BY timestamp DESC;"""
+
+160,"""Retrieve the tweets with the highest retweet count related to the typhoon disaster in Taiwan.""","""SELECT tweet_text, retweet_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Taiwan%' AND tweet_text LIKE '%typhoon%'
+ORDER BY retweet_count DESC
+LIMIT 3;"""
+
+161,"""List the types of natural disasters that have affected the Taipei area, along with the affected population and relief status for each disaster.""","""SELECT d.disaster_type, d.affected_population, d.relief_status
+FROM Disaster_Information d
+WHERE d.location LIKE '%Taipei%';"""
+
+162,"""Show the infrastructure status for the areas affected by the most recent earthquake in Taiwan.""","""SELECT d.affected_areas, d.infrastructure_status
+FROM Damage_Assessment d
+WHERE d.damage_type = 'Earthquake' AND d.location LIKE '%Taiwan%'
+ORDER BY d.timestamp DESC
+LIMIT 1;"""
+
+163,"""Find the emergency contacts who can provide psychological support services in Kaohsiung.""","""SELECT contact_info, organization_name, designation
+FROM Emergency_Contacts
+WHERE location LIKE '%Kaohsiung%' AND contact_type LIKE '%Psychological Support%';"""
+
+164,"""List the community support services offering counseling services in Tainan, along with their service hours.""","""SELECT service_type, description, service_hours
+FROM Community_Support_Services
+WHERE location LIKE '%Tainan%' AND description LIKE '%counseling%';"""
+
+165,"""Show the emergency response plans for typhoon disasters in Taiwan, including their descriptions and responsible agencies.""","""SELECT plan_type, description, responsible_agency
+FROM Emergency_Response_Plans
+WHERE location LIKE '%Taiwan%' AND plan_type LIKE '%Typhoon%';"""
+
+166,"""List the disaster recovery resources available in Taiwan, along with their availability status and distribution process.""","""SELECT resource_type, description, location, availability_status, distribution_process
+FROM Disaster_Recovery_Resources
+WHERE location LIKE '%Taiwan%';"""
+
+167,"""Find the safety procedures related to earthquake preparedness in Taiwan, including their descriptions and responsible authorities.""","""SELECT procedure_type, description, responsible_authority
+FROM Safety_Procedures
+WHERE location LIKE '%Taiwan%' AND procedure_type LIKE '%Earthquake%';"""
+
+168,"""List the disaster training programs scheduled in Taiwan for earthquake preparedness, including their descriptions and training dates.""","""SELECT program_type, description, training_date
+FROM Disaster_Training_Programs
+WHERE location LIKE '%Taiwan%' AND program_type LIKE '%Earthquake%';"""
+
+169,"""Show the details of donations received for the typhoon disaster in Taiwan, including the donor, donation type, quantity, and distribution status.""","""SELECT d.donor_id, d.donation_type, d.quantity, d.distribution_status
+FROM Donations d
+JOIN Disaster_Information i ON d.recipient_org = i.disaster_id
+WHERE i.location LIKE '%Taiwan%' AND i.disaster_type = 'Typhoon';"""
+
+170,"""List the resource centers in Taiwan that have medical supplies available, along with their contact information.""","""SELECT location, contact_info
+FROM Resource_Centers
+WHERE location LIKE '%Taiwan%' AND available_resources LIKE '%medical%';"""
+
+171,"""Find the emergency response team assignments involving international aid organizations for the typhoon disaster in Taiwan.""","""SELECT task_description, team_leader, team_members
+FROM Emergency_Response_Team_Assignments
+WHERE location LIKE '%Taiwan%' AND task_description LIKE '%international aid%' AND task_description LIKE '%typhoon%';"""
+
+172,"""Show the disaster relief fund allocations for international aid organizations assisting with the typhoon disaster in Taiwan.""","""SELECT fund_type, amount_allocated, allocation_purpose, beneficiary_criteria
+FROM Disaster_Relief_Fund_Allocation
+WHERE allocation_purpose LIKE '%international aid%' AND allocation_purpose LIKE '%typhoon%' AND allocation_purpose LIKE '%Taiwan%';"""
+
+173,"""List the risk mitigation strategies related to earthquake preparedness in Taiwan, along with their descriptions and implementation status.""","""SELECT strategy_type, description, implementation_status
+FROM Risk_Mitigation_Strategies
+WHERE location LIKE '%Taiwan%' AND strategy_type LIKE '%Earthquake%';"""
+
+174,"""Find the government alerts issued for Taiwan related to earthquake disasters, including their severity and instructions given.""","""SELECT alert_type, severity, instructions_given
+FROM Government_Alerts
+WHERE affected_area LIKE '%Taiwan%' AND alert_type LIKE '%Earthquake%';"""
+
+175,"""Show the public safety announcements made in Taiwan during the typhoon disaster, including their message and audience reach.""","""SELECT announcement_type, message, audience_reach
+FROM Public_Safety_Announcements
+WHERE location LIKE '%Taiwan%' AND announcement_type LIKE '%Typhoon%';"""
+
+189,"""What are the recent tweets about the typhoon disaster in the Philippines, along with their sentiment scores?""","""SELECT tweet_text, sentiment_score
+FROM Disaster_Tweets
+WHERE location LIKE '%Philippines%' AND tweet_text LIKE '%typhoon%'
+ORDER BY timestamp DESC;"""
+
+190,"""Retrieve the tweets with the highest retweet count related to the typhoon disaster in the Philippines.""","""SELECT tweet_text, retweet_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Philippines%' AND tweet_text LIKE '%typhoon%'
+ORDER BY retweet_count DESC
+LIMIT 3;"""
+
+191,"""List the types of natural disasters that have affected the Manila area, along with the affected population and relief status for each disaster.""","""SELECT d.disaster_type, d.affected_population, d.relief_status
+FROM Disaster_Information d
+WHERE d.location LIKE '%Manila%';"""
+
+192,"""Show the infrastructure status for the areas affected by the most recent typhoon in the Philippines.""","""SELECT d.affected_areas, d.infrastructure_status
+FROM Damage_Assessment d
+WHERE d.damage_type = 'Typhoon' AND d.location LIKE '%Philippines%'
+ORDER BY d.timestamp DESC
+LIMIT 1;"""
+
+193,"""Find the emergency contacts who can provide psychological support services in Cebu.""","""SELECT contact_info, organization_name, designation
+FROM Emergency_Contacts
+WHERE location LIKE '%Cebu%' AND contact_type LIKE '%Psychological Support%';"""
+
+194,"""List the community support services offering counseling services in Davao, along with their service hours.""","""SELECT service_type, description, service_hours
+FROM Community_Support_Services
+WHERE location LIKE '%Davao%' AND description LIKE '%counseling%';"""
+
+195,"""Show the emergency response plans for typhoon disasters in the Philippines, including their descriptions and responsible agencies.""","""SELECT plan_type, description, responsible_agency
+FROM Emergency_Response_Plans
+WHERE location LIKE '%Philippines%' AND plan_type LIKE '%Typhoon%';"""
+
+196,"""List the disaster recovery resources available in the Philippines, along with their availability status and distribution process.""","""SELECT resource_type, description, location, availability_status, distribution_process
+FROM Disaster_Recovery_Resources
+WHERE location LIKE '%Philippines%';"""
+
+197,"""Find the safety procedures related to typhoon preparedness in the Philippines, including their descriptions and responsible authorities.""","""SELECT procedure_type, description, responsible_authority
+FROM Safety_Procedures
+WHERE location LIKE '%Philippines%' AND procedure_type LIKE '%Typhoon%';"""
+
+198,"""List the disaster training programs scheduled in the Philippines for typhoon preparedness, including their descriptions and training dates.""","""SELECT program_type, description, training_date
+FROM Disaster_Training_Programs
+WHERE location LIKE '%Philippines%' AND program_type LIKE '%Typhoon%';"""
+
+199,"""Show the details of donations received for the typhoon disaster in the Philippines, including the donor, donation type, quantity, and distribution status.""","""SELECT d.donor_id, d.donation_type, d.quantity, d.distribution_status
+FROM Donations d
+JOIN Disaster_Information i ON d.recipient_org = i.disaster_id
+WHERE i.location LIKE '%Philippines%' AND i.disaster_type = 'Typhoon';"""
+
+200,"""List the resource centers in the Philippines that have medical supplies available, along with their contact information.""","""SELECT location, contact_info
+FROM Resource_Centers
+WHERE location LIKE '%Philippines%' AND available_resources LIKE '%medical%';"""
+
+201,"""Find the emergency response team assignments involving international aid organizations for the typhoon disaster in the Philippines.""","""SELECT task_description, team_leader, team_members
+FROM Emergency_Response_Team_Assignments
+WHERE location LIKE '%Philippines%' AND task_description LIKE '%international aid%' AND task_description LIKE '%typhoon%';"""
+
+202,"""Show the disaster relief fund allocations for international aid organizations assisting with the typhoon disaster in the Philippines.""","""SELECT fund_type, amount_allocated, allocation_purpose, beneficiary_criteria
+FROM Disaster_Relief_Fund_Allocation
+WHERE allocation_purpose LIKE '%international aid%' AND allocation_purpose LIKE '%typhoon%' AND allocation_purpose LIKE '%Philippines%';"""
+
+203,"""List the risk mitigation strategies related to typhoon preparedness in the Philippines, along with their descriptions and implementation status.""","""SELECT strategy_type, description, implementation_status
+FROM Risk_Mitigation_Strategies
+WHERE location LIKE '%Philippines%' AND strategy_type LIKE '%Typhoon%';"""
+
+204,"""Find the government alerts issued for the Philippines related to typhoon disasters, including their severity and instructions given.""","""SELECT alert_type, severity, instructions_given
+FROM Government_Alerts
+WHERE affected_area LIKE '%Philippines%' AND alert_type LIKE '%Typhoon%';"""
+
+205,"""Show the public safety announcements made in the Philippines during the typhoon disaster, including their message and audience reach.""","""SELECT announcement_type, message, audience_reach
+FROM Public_Safety_Announcements
+WHERE location LIKE '%Philippines%' AND announcement_type LIKE '%Typhoon%';"""
+
+206,"""What were the maximum tsunami heights observed in different places in the Philippines after the 2013 Sulawesi earthquake?""","""SELECT location, maximum_tsunami_height
+FROM Tsunami_Data
+WHERE event_name = '2013 Sulawesi earthquake';"""
+
+207,"""How many landslides were recorded in the Philippines following the 2018 Typhoon Mangkhut?""","""SELECT COUNT(*)
+FROM Landslide_Data
+WHERE event_name = '2018 Typhoon Mangkhut';"""
+
+208,"""What was the total damage to agriculture in the Philippines after the 2018 Typhoon Mangkhut?""","""SELECT SUM(damage_amount)
+FROM Agricultural_Damage
+WHERE event_name = '2018 Typhoon Mangkhut';"""
+
+209,"""How many people were stranded or trapped in the Philippines after the 2018 Typhoon Mangkhut?""","""SELECT SUM(number_of_people)
+FROM Stranded_People
+WHERE event_name = '2018 Typhoon Mangkhut';"""
+
+210,"""What was the total damage to public infrastructure in the Philippines after the 2018 Typhoon Mangkhut?""","""SELECT SUM(damage_amount)
+FROM Public_Infrastructure_Damage
+WHERE event_name = '2018 Typhoon Mangkhut';"""
+
+211,"""What are the recent tweets about the flood disaster in Vietnam, along with their sentiment scores?""","""SELECT tweet_text, sentiment_score
+FROM Disaster_Tweets
+WHERE location LIKE '%Vietnam%' AND tweet_text LIKE '%flood%'
+ORDER BY timestamp DESC;"""
+
+212,"""Retrieve the tweets with the highest retweet count related to the flood disaster in Vietnam.""","""SELECT tweet_text, retweet_count
+FROM Disaster_Tweets
+WHERE location LIKE '%Vietnam%' AND tweet_text LIKE '%flood%'
+ORDER BY retweet_count DESC
+LIMIT 3;"""
+
+213,"""List the types of natural disasters that have affected the Hanoi area, along with the affected population and relief status for each disaster.""","""SELECT d.disaster_type, d.affected_population, d.relief_status
+FROM Disaster_Information d
+WHERE d.location LIKE '%Hanoi%';"""
+
+214,"""Show the infrastructure status for the areas affected by the most recent flood in Vietnam.""","""SELECT d.affected_areas, d.infrastructure_status
+FROM Damage_Assessment d
+WHERE d.damage_type = 'Flood' AND d.location LIKE '%Vietnam%'
+ORDER BY d.timestamp DESC
+LIMIT 1;"""
+
+215,"""Find the emergency contacts who can provide psychological support services in Ho Chi Minh City.""","""SELECT contact_info, organization_name, designation
+FROM Emergency_Contacts
+WHERE location LIKE '%Ho Chi Minh City%' AND contact_type LIKE '%Psychological Support%';"""
